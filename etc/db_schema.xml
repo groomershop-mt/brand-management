@@ -1,0 +1,118 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="brands_entity" resource="default" engine="innodb">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="layout_update_xml" nullable="true" length="64" comment="Layout Update XML" />
+        <column xsi:type="varchar" name="brand_icon" nullable="true" length="64" comment="Brand Icon" />
+        <column xsi:type="varchar" name="brand_url_key" nullable="true" length="64" comment="Brand Url Key" />
+        <column xsi:type="smallint" name="is_featured" unsigned="true" nullable="false" comment="Is Featured"/>
+        <column xsi:type="smallint" name="enabled" unsigned="true" nullable="false" comment="Enabled"/>
+        <column xsi:type="smallint" name="show_in_brand_carousel" unsigned="true" nullable="true" comment="Show In Brand Carousel"/>
+        <column xsi:type="text" name="short_description" nullable="true" comment="Short Description"/>
+        <column xsi:type="text" name="full_description" nullable="true" comment="Full Description"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+
+    <table name="brands_entity_int" resource="default" engine="innodb">
+        <column xsi:type="int" name="value_id" unsigned="true" nullable="false" identity="true" comment="Value Id"/>
+        <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" default="0" comment="Attribute Id"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" default="0" comment="Store Id"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" default="0" comment="Entity ID"/>
+        <column xsi:type="int" name="value" padding="10" unsigned="true" nullable="true" default="0" comment="Attribute Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_INT_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID"
+                    table="brands_entity_int" column="attribute_id"
+                    referenceTable="eav_attribute" referenceColumn="attribute_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_INT_ENTITY_ID_BRANDS_ENTITY_ENTITY_ID"
+                    table="brands_entity_int" column="entity_id"
+                    referenceTable="brands_entity" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_INT_STORE_ID_STORE_STORE_ID"
+                    table="brands_entity_int" column="store_id"
+                    referenceTable="store" referenceColumn="store_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="BRANDS_ENTITY_INT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID">
+            <column name="entity_id"/>
+            <column name="attribute_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="BRANDS_ENTITY_INT_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id"/>
+        </index>
+        <index referenceId="BRANDS_ENTITY_INT_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+
+    <table name="brands_entity_text" resource="default" engine="innodb">
+        <column xsi:type="int" name="value_id" unsigned="true" nullable="false" identity="true" comment="Value Id"/>
+        <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" default="0" comment="Attribute Id"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" default="0" comment="Store Id"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" default="0" comment="Entity ID"/>
+        <column xsi:type="text" name="value" nullable="true" comment="Attribute Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_TEXT_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID"
+                    table="brands_entity_text" column="attribute_id"
+                    referenceTable="eav_attribute" referenceColumn="attribute_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_TEXT_ENTITY_ID_BRANDS_ENTITY_ENTITY_ID"
+                    table="brands_entity_text" column="entity_id"
+                    referenceTable="brands_entity" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_TEXT_STORE_ID_STORE_STORE_ID"
+                    table="brands_entity_text" column="store_id"
+                    referenceTable="store" referenceColumn="store_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="BRANDS_ENTITY_TEXT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID">
+            <column name="entity_id"/>
+            <column name="attribute_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="BRANDS_ENTITY_TEXT_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id"/>
+        </index>
+        <index referenceId="BRANDS_ENTITY_TEXT_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+
+    <table name="brands_entity_varchar" resource="default" engine="innodb">
+        <column xsi:type="int" name="value_id" unsigned="true" nullable="false" identity="true" comment="Value Id"/>
+        <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" default="0" comment="Attribute Id"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" default="0" comment="Store Id"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" default="0" comment="Entity ID"/>
+        <column xsi:type="varchar" name="value" length="255" nullable="true" comment="Attribute Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_VARCHAR_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID"
+                    table="brands_entity_varchar" column="attribute_id"
+                    referenceTable="eav_attribute" referenceColumn="attribute_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_VARCHAR_ENTITY_ID_BRANDS_ENTITY_ENTITY_ID"
+                    table="brands_entity_varchar" column="entity_id"
+                    referenceTable="brands_entity" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID"
+                    table="brands_entity_varchar" column="store_id"
+                    referenceTable="store" referenceColumn="store_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="BRANDS_ENTITY_VARCHAR_ENTITY_ID_ATTRIBUTE_ID_STORE_ID">
+            <column name="entity_id"/>
+            <column name="attribute_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="BRANDS_ENTITY_VARCHAR_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id"/>
+        </index>
+        <index referenceId="BRANDS_ENTITY_VARCHAR_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+</schema>
