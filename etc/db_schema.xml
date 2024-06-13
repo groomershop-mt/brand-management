@@ -53,7 +53,7 @@
         <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" default="0" comment="Attribute Id"/>
         <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" default="0" comment="Store Id"/>
         <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" default="0" comment="Entity ID"/>
-        <column xsi:type="text" name="value" nullable="true" comment="Attribute Value"/>
+        <column xsi:type="mediumtext" name="value" nullable="true" comment="Attribute Value"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="value_id"/>
         </constraint>
