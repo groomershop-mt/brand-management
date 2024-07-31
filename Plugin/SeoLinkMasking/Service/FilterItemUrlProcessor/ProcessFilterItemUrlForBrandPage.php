@@ -24,7 +24,7 @@ class ProcessFilterItemUrlForBrandPage
 
     public function afterGetUrl(\MageSuite\SeoLinkMasking\Service\FilterItemUrlProcessor $subject, $result, $category, $requestParameters)
     {
-        if ($category || isset($requestParameters['q'])) {
+        if ($category || isset($requestParameters['q']) || isset($requestParameters['price'])) {
             return $result;
         }
 
