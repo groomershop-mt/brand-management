@@ -72,3 +72,15 @@ $brand
     ->setIsFeatured(1)
     ->setShowInBrandCarousel(0);
 $brandRepository->save($brand);
+
+$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
+$brand
+    ->setEntityId(706)
+    ->setStoreId(1)
+    ->setUrlKey('loreal')
+    ->setLayoutUpdateXml('layout update xml')
+    ->setBrandName('é Loreal with special char as first letter')
+    ->setEnabled(1)
+    ->setIsFeatured(1)
+    ->setShowInBrandCarousel(0);
+$brandRepository->save($brand);
