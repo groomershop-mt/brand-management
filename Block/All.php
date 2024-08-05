@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Block;
 
@@ -13,15 +14,13 @@ class All extends \Magento\Framework\View\Element\Template
         \Magento\Framework\View\Element\Template\Context $context,
         \MageSuite\BrandManagement\Model\BrandsRepository $brandsRepository,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->brandsRepository = $brandsRepository;
     }
 
-    protected function _prepareLayout()
+    protected function _prepareLayout(): All
     {
-
         $result = parent::_prepareLayout();
 
         $title = __('All Brands');
@@ -45,7 +44,8 @@ class All extends \Magento\Framework\View\Element\Template
         return $result;
     }
 
-    public function getAllBrands(){
+    public function getAllBrands(): array
+    {
         $brands = $this->brandsRepository->getAllBrands();
 
         $data = [];
@@ -69,11 +69,13 @@ class All extends \Magento\Framework\View\Element\Template
         return $data;
     }
 
-    public function getBrandsGroupedByFirstLetter() {
+    public function getBrandsGroupedByFirstLetter(): array
+    {
         $brandsByFirstLetter = [];
 
+        /** @var \MageSuite\BrandManagement\Api\Data\BrandsInterface $brand */
         foreach($this->getAllBrands() as $brand) {
-            $firstLetter = strtolower($brand->getBrandName()[0]);
+            $firstLetter = $this->getFirstLetter($brand->getBrandName());
 
             if(!isset($brandsByFirstLetter[$firstLetter])) {
                 $brandsByFirstLetter[$firstLetter] = [];
@@ -82,8 +84,11 @@ class All extends \Magento\Framework\View\Element\Template
             $brandsByFirstLetter[$firstLetter][] = $brand;
         }
 
-        ksort($brandsByFirstLetter);
-
         return $brandsByFirstLetter;
+    }
+
+    public function getFirstLetter(string $string): string
+    {
+        return strtolower(mb_substr($string, 0, 1));
     }
 }

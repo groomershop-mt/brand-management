@@ -12,6 +12,22 @@ class AllTest extends \PHPUnit\Framework\TestCase
 
     protected $expectedData = [
         [
+            'entity_id' => '800',
+            'brand_name' => 'é_test_brand_name_with_special_char_as_first_letter',
+            'layout_update_xml' => null,
+            'brand_icon' => 'testimage.png',
+            'brand_url_key' => 'urlkey3',
+            'is_featured' => '1',
+            'enabled' => '1',
+            'show_in_brand_carousel' => '0',
+            'brand_additional_icon' => 'testimage_additional.png',
+            'short_description' => 'short description 3',
+            'full_description' => 'full description 3',
+            'meta_title' => 'Test meta title 3',
+            'meta_description' => 'Test meta description 3',
+            'meta_robots' => 'INDEX,FOLLOW'
+        ],
+        [
             'entity_id' => '600',
             'brand_name' => 'test_brand_name',
             'layout_update_xml' => null,
@@ -21,15 +37,15 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'enabled' => '1',
             'show_in_brand_carousel' => '0',
             'brand_additional_icon' => 'testimage_additional.png',
-            'short_description' => 'short description 1',
-            'full_description' => 'full description 1',
+            'short_description' => 'short description',
+            'full_description' => 'full description',
             'meta_title' => 'Test meta title',
             'meta_description' => 'Test meta description',
             'meta_robots' => 'NOINDEX,NOFOLLOW'
         ],
         [
             'entity_id' => '700',
-            'brand_name' => 'test_brand_name2',
+            'brand_name' => 'test_brand_name_2',
             'layout_update_xml' => null,
             'brand_icon' => 'testimage.png',
             'brand_url_key' => 'urlkey2',
@@ -42,7 +58,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'meta_title' => 'Test meta title 2',
             'meta_description' => 'Test meta description 2',
             'meta_robots' => 'INDEX,FOLLOW'
-        ]
+        ],
     ];
 
     protected function setUp(): void
@@ -70,7 +86,6 @@ class AllTest extends \PHPUnit\Framework\TestCase
      */
     public function testItReturnsBrandsData()
     {
-
         $expectedData = $this->expectedData;
         $brands = $this->block->getAllBrands();
         foreach ($brands as $key => $brand) {
@@ -88,8 +103,8 @@ class AllTest extends \PHPUnit\Framework\TestCase
      */
     public function testItReturnsGroupedBrandsData()
     {
-        $expectedCount = ['a' => 3, 'l' => 1, 'n' => 2];
-        $expectedOrder = ['a', 'l', 'n'];
+        $expectedCount = ['a' => 3, 'l' => 1, 'n' => 2, 'é' => 1];
+        $expectedOrder = ['a', 'é', 'l', 'n'];
         $brands = $this->block->getBrandsGroupedByFirstLetter();
         $resultOrder = [];
         foreach ($brands as $key => $item) {
@@ -97,5 +112,24 @@ class AllTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals($expectedCount[$key], count($item));
         }
         $this->assertEquals($expectedOrder, $resultOrder);
+    }
+
+    /**
+     * @magentoAppArea frontend
+     * @magentoDbIsolation enabled
+     * @magentoAppIsolation enabled
+     * @magentoDataFixture loadBrands
+     */
+    public function testItReturnsCorrectFirstLetter()
+    {
+        $expectedFirstLetters = ['é', 't', 't'];
+        $brands = $this->block->getAllBrands();
+        foreach ($brands as $key => $brand) {
+            $this->assertInstanceOf(\MageSuite\BrandManagement\Model\Brands::class, $brand);
+            $this->assertEquals(
+                $expectedFirstLetters[$key],
+                $this->block->getFirstLetter($brand->getBrandName())
+            );
+        }
     }
 }
