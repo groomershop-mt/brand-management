@@ -89,6 +89,6 @@ class All extends \Magento\Framework\View\Element\Template
 
     public function getFirstLetter(string $string): string
     {
-        return strtolower(mb_substr($string, 0, 1));
+        return strtolower(mb_substr($string, 0, 1, 'UTF-8'));
     }
 }
