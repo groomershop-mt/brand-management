@@ -8,29 +8,11 @@ namespace MageSuite\BrandManagement\Test\Integration\Controller;
  */
 class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
 {
-    public static function loadCategoriesWithProductsFixture()
-    {
-        require __DIR__.'/../_files/categories_with_products.php';
-
-        $indexerRegistry = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->create(\Magento\Framework\Indexer\IndexerRegistry::class);
-        $indexerRegistry->get(\Magento\CatalogSearch\Model\Indexer\Fulltext::INDEXER_ID)->reindexAll();
-    }
-
-    public static function loadCategoriesWithProductsFixtureRollback()
-    {
-        require __DIR__.'/../_files/categories_with_products_rollback.php';
-    }
-
-    public static function loadBrands() {
-        include __DIR__.'/../_files/brands_integration.php';
-    }
-
     /**
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrands
-     * @magentoDataFixture loadCategoriesWithProductsFixture
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/categories_with_products.php
      */
     public function testItReturnsIndexPage()
     {
@@ -43,8 +25,8 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
     /**
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrands
-     * @magentoDataFixture loadCategoriesWithProductsFixture
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/categories_with_products.php
      */
     public function testItReturnsCorrectBrandPage()
     {
@@ -58,8 +40,8 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
     /**
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrands
-     * @magentoDataFixture loadCategoriesWithProductsFixture
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/categories_with_products.php
      */
     public function testItReturnsCorrectBrandPageWithFilter()
     {
