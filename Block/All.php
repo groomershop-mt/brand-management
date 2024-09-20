@@ -1,14 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Block;
 
 class All extends \Magento\Framework\View\Element\Template
 {
-    /**
-     * @var \MageSuite\BrandManagement\Model\BrandsRepository
-     */
-    protected $brandsRepository;
+    protected \MageSuite\BrandManagement\Model\BrandsRepository $brandsRepository;
+    protected ?array $brands = null;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
@@ -16,6 +15,7 @@ class All extends \Magento\Framework\View\Element\Template
         array $data = []
     ) {
         parent::__construct($context, $data);
+
         $this->brandsRepository = $brandsRepository;
     }
 
@@ -46,27 +46,30 @@ class All extends \Magento\Framework\View\Element\Template
 
     public function getAllBrands(): array
     {
-        $brands = $this->brandsRepository->getAllBrands();
-
-        $data = [];
-
-        if(empty($brands)) {
-            return $data;
+        if ($this->brands !== null) {
+            return $this->brands;
         }
 
-        foreach($brands as $brand) {
-            if(!$brand->getEnabled()) {
+        $this->brands = [];
+        $allBrands = $this->brandsRepository->getAllBrands();
+
+        if (empty($allBrands)) {
+            return $this->brands;
+        }
+
+        foreach ($allBrands as $brand) {
+            if (!$brand->getEnabled()) {
                 continue;
             }
 
-            if(empty($brand->getBrandUrl())) {
+            if (empty($brand->getBrandUrl())) {
                 continue;
             }
 
-            $data[] = $brand;
+            $this->brands[] = $brand;
         }
 
-        return $data;
+        return $this->brands;
     }
 
     public function getBrandsGroupedByFirstLetter(): array
@@ -74,10 +77,10 @@ class All extends \Magento\Framework\View\Element\Template
         $brandsByFirstLetter = [];
 
         /** @var \MageSuite\BrandManagement\Api\Data\BrandsInterface $brand */
-        foreach($this->getAllBrands() as $brand) {
+        foreach ($this->getAllBrands() as $brand) {
             $firstLetter = $this->getFirstLetter($brand->getBrandName());
 
-            if(!isset($brandsByFirstLetter[$firstLetter])) {
+            if (!isset($brandsByFirstLetter[$firstLetter])) {
                 $brandsByFirstLetter[$firstLetter] = [];
             }
 
