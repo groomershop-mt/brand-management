@@ -110,6 +110,13 @@
                     <ticket_id>FR-216</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.9.16" date="2024-09-20">
+                <entry>
+                    <type>PERFORMANCE</type>
+                    <overview>Avoid loading all brands from database multiple times on brand page</overview>
+                    <ticket_id>IPET-2810</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
