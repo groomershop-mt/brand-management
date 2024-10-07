@@ -58,11 +58,7 @@ class All extends \Magento\Framework\View\Element\Template
         }
 
         foreach ($allBrands as $brand) {
-            if (!$brand->getEnabled()) {
-                continue;
-            }
-
-            if (empty($brand->getBrandUrl())) {
+            if (!$brand->getEnabled() || empty($brand->getBrandUrl())) {
                 continue;
             }
 

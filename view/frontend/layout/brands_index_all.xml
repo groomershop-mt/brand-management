@@ -5,7 +5,7 @@
     </head>
     <body>
         <referenceContainer name="content">
-            <block class="MageSuite\BrandManagement\Block\All" name="all_brands_list" template="MageSuite_BrandManagement::all.phtml" cacheable="false"/>
+            <block class="MageSuite\BrandManagement\Block\All" name="all_brands_list" template="MageSuite_BrandManagement::all.phtml"/>
         </referenceContainer>
     </body>
 </page>

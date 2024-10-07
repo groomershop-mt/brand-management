@@ -103,15 +103,15 @@ class Upload
 
     public function prepareUploadImage()
     {
-        if(!isset($_FILES) && !$_FILES['brand_icon']['name']) {
-            $result = ['error' => __('Image file has been not uploaded'), 'errorcode' => __('Image file has been not uploaded')];
-            return $result;
+        if (isset($_FILES['brand_icon'])) {
+            $result = ['tmp_name' => $_FILES['brand_icon']['tmp_name'], 'name' => $_FILES['brand_icon']['name']];
         }
 
-        return [
-            'tmp_name' => $_FILES['brand_icon']['tmp_name'],
-            'name' => $_FILES['brand_icon']['name']
-        ];
+        if (isset($_FILES['brand_additional_icon'])) {
+            $result = ['tmp_name' => $_FILES['brand_additional_icon']['tmp_name'], 'name' => $_FILES['brand_additional_icon']['name']];
+        }
+
+        return $result ?? ['error' => __('Image file has been not uploaded'), 'errorcode' => __('Image file has been not uploaded')];;
     }
 
     public function prepareUploadBase64Encoded($imageData)

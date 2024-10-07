@@ -4,6 +4,8 @@ namespace MageSuite\BrandManagement\Model;
 
 class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
 {
+    protected array $allBrands = [];
+
     /**
      * @var \MageSuite\BrandManagement\Model\ResourceModel\Brands
      */
@@ -68,19 +70,16 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
 
     public function getById($id, $storeId = null)
     {
+        if ($storeId && isset($this->allBrands[$storeId][$id])) {
+            return $this->allBrands[$storeId][$id];
+        }
+
         /** @var Brands $brand */
         $brand = $this->brandsFactory->create();
         if (null !== $storeId) {
             $brand->setData('store_id', $storeId);
         }
 
-        /**
-         * Brand is loaded twice, first for requested store id, second for default store view.
-         * This is done to get proper data if params for store id is empty or not fulfilled.
-         * If brand is not additionally loaded for default store view data is not taken correctly.
-         */
-        $brand->getResource()->setDefaultStoreId($storeId);
-        $brand->load($id);
         $brand->getResource()->setDefaultStoreId(\Magento\Store\Model\Store::DEFAULT_STORE_ID);
         $brand->load($id);
 
@@ -154,6 +153,10 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
             $storeId = $this->storeManager->getStore()->getId();
         }
 
+        if (isset($this->allBrands[$storeId])) {
+            return $this->allBrands[$storeId];
+        }
+
         $brandCollection = $this->collectionFactory->create();
         $brandCollection->setStoreId($storeId);
         $brandCollection->addSortByName();
@@ -162,6 +165,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
         $brandDataArray = [];
         foreach ($brandCollection as $brand) {
             $brandDataArray[$brand->getEntityId()] = $brand;
+            $this->allBrands[$storeId][$brand->getEntityId()] = $brand;
         }
 
         return $brandDataArray;
