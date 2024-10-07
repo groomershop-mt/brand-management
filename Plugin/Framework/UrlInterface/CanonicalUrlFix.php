@@ -28,11 +28,13 @@ class CanonicalUrlFix
         /** @var \MageSuite\BrandManagement\Model\Brands $currentBrand */
         $currentBrand = $this->registry->registry('current_brand');
 
-        if (strpos($url, self::ROUTE_BRAND_OVERVIEW_PAGE) !== false) {
+        if (str_contains($url, self::ROUTE_BRAND_OVERVIEW_PAGE)) {
             $url = str_replace(self::ROUTE_BRAND_OVERVIEW_PAGE, $this->configuration->getRouteToBrand(), $url);
+
+            return $url;
         }
 
-        if (strpos($url, '/index/index/brand/') !== false && $currentBrand) {
+        if ($currentBrand && str_contains($url, '/index/index/brand/')) {
             $brandName = rawurlencode($currentBrand->getBrandName());
             $oldUrl = 'brands/index/index/brand/' . $brandName;
             $newUrl = sprintf('%s/%s', $this->configuration->getRouteToBrand(), $currentBrand->getBrandUrlKey());

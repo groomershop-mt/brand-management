@@ -47,6 +47,7 @@ interface BrandsRepositoryInterface
      */
     public function getBrandByName($brandName, $storeId);
 
+
     /**
      * @param \MageSuite\BrandManagement\Api\Data\BrandsInterface $brand
      * @return \MageSuite\BrandManagement\Api\Data\BrandsInterface

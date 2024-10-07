@@ -8,7 +8,8 @@ namespace MageSuite\BrandManagement\Test\Integration\Block;
  */
 class AllTest extends \PHPUnit\Framework\TestCase
 {
-    protected $block;
+    protected ?\MageSuite\BrandManagement\Block\All $block;
+    protected ?array $brands;
 
     protected $expectedData = [
         [
@@ -65,6 +66,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $this->block = $objectManager->create('MageSuite\BrandManagement\Block\All', ['data' => []]);
+        $this->brands = $this->block->getAllBrands();
     }
 
 
@@ -87,8 +89,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
     public function testItReturnsBrandsData()
     {
         $expectedData = $this->expectedData;
-        $brands = $this->block->getAllBrands();
-        foreach ($brands as $key => $brand) {
+        foreach ($this->brands as $key => $brand) {
             $this->assertInstanceOf(\MageSuite\BrandManagement\Model\Brands::class, $brand);
             $this->assertEquals($expectedData[$key], $brand->getData());
 
@@ -123,8 +124,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
     public function testItReturnsCorrectFirstLetter()
     {
         $expectedFirstLetters = ['é', 't', 't'];
-        $brands = $this->block->getAllBrands();
-        foreach ($brands as $key => $brand) {
+        foreach ($this->brands as $key => $brand) {
             $this->assertInstanceOf(\MageSuite\BrandManagement\Model\Brands::class, $brand);
             $this->assertEquals(
                 $expectedFirstLetters[$key],
