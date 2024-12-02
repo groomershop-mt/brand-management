@@ -4,6 +4,7 @@
         <brand_management>
             <general>
                 <route_to_brand>brands</route_to_brand>
+                <show_safety_regulations>0</show_safety_regulations>
             </general>
             <brand_visibility>
                 <pdp>0</pdp>

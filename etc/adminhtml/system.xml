@@ -14,6 +14,11 @@
                     <label>Route to Brand</label>
                     <comment>For example, "brands" makes the blog accessible at domain.com/brands</comment>
                 </field>
+                <field id="show_safety_regulations" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show safety regulations</label>
+                    <comment>Decides if safety regulations should be displayed in product details. If they are available.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
             </group>
             <group id="brand_visibility" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Show brand on:</label>

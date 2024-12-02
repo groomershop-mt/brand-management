@@ -1,23 +1,38 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Helper;
 
 class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
 {
-    const XML_PATH_GENERAL_ROUTE_TO_BRAND = 'brand_management/general/route_to_brand';
-    const BRAND_VISIBILITY_CONFIG_PATH = 'brand_management/brand_visibility';
-    const BRAND_VISIBILITY_PDP = 'pdp';
-    const BRAND_VISIBILITY_TILE = 'tile';
-    const BRAND_VISIBILITY_CART = 'cart';
-    const BRAND_VISIBILITY_MINICART = 'minicart';
-    const BRAND_VISIBILITY_ORDER_SUMMARY = 'order_summary';
-    const BRAND_VISIBILITY_SEARCH_AUTOCOMPLETE = 'search_autocomplete';
-    const BRANDS_OVERVIEW_SEO_CONFIG_PATH = 'brand_management/brands_overview_page_seo';
+    public const XML_PATH_GENERAL_ROUTE_TO_BRAND = 'brand_management/general/route_to_brand';
+    public const XML_PATH_GENERAL_SHOW_SAFETY_REGULATIONS = 'brand_management/general/show_safety_regulations';
+    public const BRAND_VISIBILITY_CONFIG_PATH = 'brand_management/brand_visibility';
+    public const BRAND_VISIBILITY_PDP = 'pdp';
+    public const BRAND_VISIBILITY_TILE = 'tile';
+    public const BRAND_VISIBILITY_CART = 'cart';
+    public const BRAND_VISIBILITY_MINICART = 'minicart';
+    public const BRAND_VISIBILITY_ORDER_SUMMARY = 'order_summary';
+    public const BRAND_VISIBILITY_SEARCH_AUTOCOMPLETE = 'search_autocomplete';
+    public const BRANDS_OVERVIEW_SEO_CONFIG_PATH = 'brand_management/brands_overview_page_seo';
 
-    protected $config;
+    /**
+     * @var \Magento\Framework\DataObject[] $seoConfig
+     */
+    protected ?array $seoConfig = null;
+    protected ?\Magento\Framework\DataObject $config = null;
 
-    protected $seoConfig;
+    public function isShowSafetyRegulationsEnabled(?int $storeId = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_GENERAL_SHOW_SAFETY_REGULATIONS,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
 
-    public function getRouteToBrand($storeId = null): string
+    public function getRouteToBrand(?int $storeId = null): string
     {
         return (string)$this->scopeConfig->getValue(
             self::XML_PATH_GENERAL_ROUTE_TO_BRAND,
@@ -71,7 +86,7 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
         return $this->config;
     }
 
-    protected function getSeoConfig($storeId = null)
+    protected function getSeoConfig(?int $storeId = null)
     {
         $store = $storeId ?? 'default';
 

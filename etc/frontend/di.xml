@@ -112,4 +112,12 @@
     <type name="Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\ItemFactory">
         <plugin name="add_brand_to_search_flyout" type="MageSuite\BrandManagement\Plugin\Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\ItemFactory\AddBrandNameToSearchFlyout"/>
     </type>
+
+    <type name="Magento\Catalog\Block\Product\View\Attributes">
+        <plugin
+            name="add_safety_regulations_brand_attribute_to_product_attributes"
+            type="MageSuite\BrandManagement\Plugin\Magento\Catalog\Block\Product\View\Attributes\AddSafetyRegulationsBrandAttributeToProductAttributes"
+            sortOrder="100"
+        />
+    </type>
 </config>

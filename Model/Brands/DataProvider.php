@@ -122,6 +122,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'show_in_brand_carousel_group' => 'use_config.show_in_brand_carousel',
                 'short_description_group' => 'use_config.short_description',
                 'full_description_group' => 'use_config.full_description',
+                'safety_regulations_group' => 'use_config.safety_regulations',
                 'brand_group_identifier_group' => 'use_config.brand_group_identifier'
             ],
             'brand_seo' => [
