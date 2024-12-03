@@ -31,7 +31,7 @@ class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInte
             return [];
         }
 
-        $routeToBrand = $this->configuration->getRouteToBrand($storeId);
+        $routeToBrand = $this->configuration->getRouteToBrand((int)$storeId);
         $priority = $this->sitemapConfiguration->getPriority($storeId);
         $changeFreq = $this->sitemapConfiguration->getChangeFrequency($storeId);
         $items = [
