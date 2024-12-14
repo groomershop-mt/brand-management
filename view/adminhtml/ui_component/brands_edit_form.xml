@@ -436,7 +436,7 @@
                     <item name="config" xsi:type="array">
                         <item name="dataType" xsi:type="string">text</item>
                         <item name="label" xsi:type="string" translate="true">Full Description</item>
-                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="formElement" xsi:type="string">texteditor</item>
                         <item name="source" xsi:type="string">brands_entity</item>
                         <item name="dataScope" xsi:type="string">full_description</item>
                         <item name="validation" xsi:type="array">
@@ -477,7 +477,7 @@
                     <item name="config" xsi:type="array">
                         <item name="dataType" xsi:type="string">text</item>
                         <item name="label" xsi:type="string" translate="true">Safety Regulations</item>
-                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="formElement" xsi:type="string">texteditor</item>
                         <item name="source" xsi:type="string">brands_entity</item>
                         <item name="dataScope" xsi:type="string">safety_regulations</item>
                         <item name="validation" xsi:type="array">
