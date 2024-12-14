@@ -41,7 +41,7 @@ class AddSafetyRegulationsBrandAttributeToProductAttributes
 
         $result[\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE] = [
             'label' => __(\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_LABEL),
-            'value' => nl2br($safetyRegulations),
+            'value' => $safetyRegulations,
             'code' => \MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE
         ];
 
